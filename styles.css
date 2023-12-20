@@ -1,0 +1,49 @@
+.navbar{
+    background-color: rgb(49, 5, 5)
+}
+
+.hero {
+    height: 675px;
+    background-color: blue;
+    text-align: start;
+    padding: 170px;
+    background-image: url('images/werhos.jpg');
+    background-size: cover;
+    background-position: bottom left;
+    position:relative;
+}
+
+.herobtn{
+    position: absolute;
+    top: 50%;
+    left: 13%;
+    transform: translate(0%, -16%);
+    background-color: rgb(33, 117, 225);
+}
+
+.herovideo{
+    position: absolute;
+    top:20%;
+    align-items: center;
+}
+
+#herotexttitle{
+    top: 50%;
+    left: 50%;
+    transform: translate(-10%, -50%);
+    color:rgb(255, 255, 255);
+    text-shadow: -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000;
+}
+
+#herotextdesc{
+    top: 50%;
+    left: 50%;
+    transform: translate(-9%, -45%);
+    font-size: 28px;
+    color:rgb(255, 255, 255);
+    text-shadow: -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000;
+}
+
+#pageFooter{
+    background-color: rgb(49, 5, 5);
+}
