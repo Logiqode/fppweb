@@ -9,21 +9,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 
     $conn = dbconn();
 
-    $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
-    $stmt->bind_result($hashedPassword);
+    $stmt->bind_result($id, $hashedPassword);
     $stmt->fetch();
 
-    if (password_verify($password, $hashedPassword)) {
-        $_SESSION['user_id'] = $id;
-        $_SESSION['username'] = $username;
-        $stmt->close();
-        $conn->close();
-        header("Location: index.php");
-        exit();
+    if ($hashedPassword) {
+        if (password_verify($password, $hashedPassword)) {
+            $_SESSION['user_id'] = $id;
+            $_SESSION['username'] = $username;
+            $stmt->close();
+            $conn->close();
+            header("Location: index.php");
+            exit();
+        } else {
+            $loginStatus = "Wrong password.";
+        }
     } else {
-        echo "Login failed.";
+        $loginStatus = "Unknown username.";
     }
 
     $stmt->close();
@@ -137,6 +141,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
                     </div>
 
                     <button type="submit" name="login">Login</button>
+                    <?php
+                    if (isset($loginStatus)) {
+                        echo "<p>$loginStatus</p>";
+                    }
+                    ?>
                 </form>
             </div>
         </div>

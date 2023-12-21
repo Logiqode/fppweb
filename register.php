@@ -2,18 +2,43 @@
 include("sqlcon.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
+    $email = $_POST['email'];
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = $_POST['password'];
 
+    // Check if email is already taken
     $conn = dbconn();
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-    $stmt->bind_param("ss", $username, $password);
-    
-    if ($stmt->execute()) {
-        echo "Registration successful!";
+    if ($stmt->num_rows > 0) {
+        $registrationStatus = "Email has already been taken.";
     } else {
-        echo "Registration failed.";
+        $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $registrationStatus = "Username has already been taken.";
+        } else {
+            if (strlen($password) < 8) {
+                $registrationStatus = "Password should be 8 characters or longer.";
+            } else {
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                $stmt = $conn->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
+                $stmt->bind_param("sss", $email, $username, $hashedPassword);
+
+                if ($stmt->execute()) {
+                    $registrationStatus = "Registration successful!";
+                } else {
+                    $registrationStatus = "Registration failed.";
+                }
+            }
+        }
     }
 
     $stmt->close();
@@ -21,12 +46,136 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
 }
 ?>
 
-<form method="post" action="">
-    <label for="username">Username:</label>
-    <input type="text" name="username" required>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required>
 
-    <button type="submit" name="register">Register</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <title>InventoryManager - FP_PWEB</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="https://kit.fontawesome.com/ca15795a80.js" crossorigin="anonymous"></script>
+    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    
+    <!-- <script defer src="script.js"></script> -->
+</head>
+
+<body>
+    <section>
+    <nav class="navbar sticky-top navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="index.php">InventoryManager</a>
+          <button class="navbar-toggler" style="color: #ffffff;"" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
+      </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Manage
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#" target="blank">Add</a></li>
+                      <li><a class="dropdown-item" href="#" target="blank">Edit</a></li>
+                      <li><a class="dropdown-item" href="#" target="blank">Delete</a></li>
+                    </ul>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">FAQ</a>
+              </li>
+            </ul>
+            <div class="d-flex">
+                <ul class="navbar-nav">
+                <?php
+                if (isset($_SESSION['username'])) {
+                //logged in
+                    echo '
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    '. $_SESSION['username'] . '
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="logout.php">Log Out</a></li>
+                    </ul>
+                    </li>';
+                } else {
+                //guest
+                    echo '
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Login
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="login.php">Login</a></li>
+                      <li><a class="dropdown-item" href="register.php">Register</a></li>
+                    </ul>
+                    </li>';
+                }
+                ?>
+                </ul>
+            </div>
+          </div>
+        </div>
+    </nav>
+    </section>
+
+    <div class="hero">
+        <div class="login-container">
+            <div class="login-box text-align-center">
+                <form method="post" action="">
+
+                    <div class="login-info">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" required>
+                    </div>
+
+                    <div class="login-info">
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" required>
+                    </div>
+
+                    <div class="login-info">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" required>
+                    </div>
+
+                    <button type="submit" name="register">Register</button>
+                    <?php
+                    if (isset($registrationStatus)) {
+                        echo "<p>$registrationStatus</p>";
+                    }
+                    ?>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <div class="text-white text-center" id="pageFooter">
+        5025221139 - Jeremy James & Allen Keyo Handika - 5025221298<br>
+        
+        Kuliah Pemrograman Web Jurusan Teknik Informatika ITS (2023). Dosen: Imam Kuswardayan, S.Kom, M.T.
+    </div>
+</footer>
+</html>
