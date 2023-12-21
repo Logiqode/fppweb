@@ -25,11 +25,12 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
     
+    <script src="https://kit.fontawesome.com/ca15795a80.js" crossorigin="anonymous"></script>
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
     
-    <script defer src="script.js"></script>
+    <!-- <script defer src="script.js"></script> -->
 </head>
 
 <body>
@@ -37,9 +38,9 @@ if ($conn->connect_error) {
     <nav class="navbar sticky-top navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand text-white" href="#">InventoryManager</a>
-         <button class="navbar-toggler" style="color: #fxfffff;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
-          </button>
+          <button class="navbar-toggler" style="color: #ffffff;"" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
+      </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -67,9 +68,7 @@ if ($conn->connect_error) {
                 <a class="nav-link text-white" href="#">FAQ</a>
               </li>
             </ul>
-          </div>
-        </div>
-        <div class="d-flex px-5">
+            <div class="d-flex">
                 <ul class="navbar-nav">
                 <?php
                 if (isset($_SESSION['username'])) {
@@ -99,6 +98,8 @@ if ($conn->connect_error) {
                 }
                 ?>
                 </ul>
+            </div>
+          </div>
         </div>
     </nav>
     </section>
@@ -107,19 +108,19 @@ if ($conn->connect_error) {
     <div class="container-fluid p-5">
         <div class="row d-flex">
             <div class="col-md-6">
-                <h1 id="herotexttitle"><b>InventoryManager</b></h1>
-                <p id="herotextdesc">Manage your inventory with InventoryManager</p>
+                <h1 id="heroTitle"><b>InventoryManager</b></h1>
+                <p id="heroDesc">Manage your inventory with InventoryManager</p>
+                <button class="btn btn-primary herobtn" type="button">
+                Learn More
+                </button>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 py-3">
                 <div class="video-placeholder herovideo">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/ZRtdQ81jPUQ?si=eG0Iz1SrxEvp5OPi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/ZRtdQ81jPUQ?si=eG0Iz1SrxEvp5OPi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
     </div>
-    <button class="btn btn-primary herobtn" type="button">
-        Learn More
-    </button>
 </div>
 
     

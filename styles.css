@@ -2,40 +2,32 @@
     background-color: rgb(49, 5, 5)
 }
 
+
 .hero {
     height: 675px;
     background-color: blue;
     text-align: start;
-    padding: 170px;
     background-image: url('images/werhos.jpg');
     background-size: cover;
     background-position: bottom left;
+    position:relative;
+    padding: 10%;
 }
 
 .herobtn{
-    top: 50%;
-    left: 13%;
-    transform: translate(0%, -16%);
     background-color: rgb(33, 117, 225);
 }
 
 .herovideo{
-    top:20%;
     align-items: center;
 }
 
-#herotexttitle{
-    top: 50%;
-    left: 50%;
-    transform: translate(-10%, -50%);
+#heroTitle{
     color:rgb(255, 255, 255);
     text-shadow: -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000;
 }
 
-#herotextdesc{
-    top: 50%;
-    left: 50%;
-    transform: translate(-9%, -45%);
+#heroDesc{
     font-size: 28px;
     color:rgb(255, 255, 255);
     text-shadow: -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000;
@@ -43,4 +35,37 @@
 
 #pageFooter{
     background-color: rgb(49, 5, 5);
+}
+
+
+.login-box{
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-box form label {
+    display: block;
+}
+
+.login-info{
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.login-box form button {
+    margin-top: 40px;
+    width: 60%;
+    margin-bottom: 10px;
 }
