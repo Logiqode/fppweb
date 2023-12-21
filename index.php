@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include("sqlcon.php");
 
 $conn = dbconn();
@@ -26,6 +28,7 @@ if ($conn->connect_error) {
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    
     <script defer src="script.js"></script>
 </head>
 
@@ -45,7 +48,7 @@ if ($conn->connect_error) {
                       Manage
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#" method="post" target="blank">Add</a></li>
+                      <li><a class="dropdown-item" href="#" target="blank">Add</a></li>
                       <li><a class="dropdown-item" href="#" target="blank">Edit</a></li>
                       <li><a class="dropdown-item" href="#" target="blank">Delete</a></li>
                     </ul>
@@ -66,27 +69,59 @@ if ($conn->connect_error) {
             </ul>
           </div>
         </div>
+        <div class="d-flex px-5">
+                <ul class="navbar-nav">
+                <?php
+                if (isset($_SESSION['username'])) {
+                //logged in
+                    echo '
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    '. $_SESSION['username'] . '
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="logout.php">Log Out</a></li>
+                    </ul>
+                    </li>';
+                } else {
+                //guest
+                    echo '
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Login
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="login.php">Login</a></li>
+                      <li><a class="dropdown-item" href="register.php">Register</a></li>
+                    </ul>
+                    </li>';
+                }
+                ?>
+                </ul>
+        </div>
     </nav>
     </section>
 
     <div class="hero">
-        <div class="container p-5">
-            <div class="row"> 
-                <div class="col sm-6"> 
-                    <h1 id="herotexttitle"><b>InventoryManager</b><h1>
-                    <p id="herotextdesc">Manage your inventory with InventoryManager</p>
-                </div>
-                <div class="col sm-6">
+    <div class="container-fluid p-5">
+        <div class="row d-flex">
+            <div class="col-md-6">
+                <h1 id="herotexttitle"><b>InventoryManager</b></h1>
+                <p id="herotextdesc">Manage your inventory with InventoryManager</p>
+            </div>
+            <div class="col-md-6">
                 <div class="video-placeholder herovideo">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/ZRtdQ81jPUQ?si=eG0Iz1SrxEvp5OPi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/ZRtdQ81jPUQ?si=eG0Iz1SrxEvp5OPi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary herobtn" type="button">
-            Learn More
-        </button>
     </div>
+    <button class="btn btn-primary herobtn" type="button">
+        Learn More
+    </button>
+</div>
+
     
     
     

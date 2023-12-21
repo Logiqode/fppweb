@@ -10,11 +10,9 @@
     background-image: url('images/werhos.jpg');
     background-size: cover;
     background-position: bottom left;
-    position:relative;
 }
 
 .herobtn{
-    position: absolute;
     top: 50%;
     left: 13%;
     transform: translate(0%, -16%);
@@ -22,7 +20,6 @@
 }
 
 .herovideo{
-    position: absolute;
     top:20%;
     align-items: center;
 }
