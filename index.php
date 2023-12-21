@@ -1,3 +1,11 @@
+<script>
+function confirmLogout() {
+    var confirmLogout = confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+        window.location.href = "logout.php";
+    }
+}
+</script>
 <?php
 session_start();
 
@@ -34,7 +42,7 @@ if ($conn->connect_error) {
 </head>
 
 <body>
-    <section>
+    
     <nav class="navbar sticky-top navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand text-white" href="#">InventoryManager</a>
@@ -53,10 +61,6 @@ if ($conn->connect_error) {
                       <li><a class="dropdown-item" href="#" target="blank">Edit</a></li>
                       <li><a class="dropdown-item" href="#" target="blank">Delete</a></li>
                     </ul>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Pricing</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-white" href="#">About Us</a>
@@ -80,7 +84,8 @@ if ($conn->connect_error) {
                     </a>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#">Profile</a></li>
-                      <li><a class="dropdown-item" href="logout.php">Log Out</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="confirmLogout()">Log Out</a></li>
+
                     </ul>
                     </li>';
                 } else {
@@ -102,13 +107,12 @@ if ($conn->connect_error) {
           </div>
         </div>
     </nav>
-    </section>
 
-    <div class="hero">
+<div class="hero">
     <div class="container-fluid p-5">
         <div class="row d-flex">
             <div class="col-md-6">
-                <h1 id="heroTitle"><b>InventoryManager</b></h1>
+                <p id="heroTitle"><b>Inventory Manager</b></p>
                 <p id="heroDesc">Manage your inventory with InventoryManager</p>
                 <button class="btn btn-primary herobtn" type="button">
                 Learn More
@@ -123,10 +127,40 @@ if ($conn->connect_error) {
     </div>
 </div>
 
+<section class="p-5">
+     <div class="container">
+        <h2>About Us</h2>
+        <div class="aboutDesc">
+        <p>
+            Welcome to InventoryManager, your go-to solution for managing your inventory efficiently.<br>
+            Click <a href="#">here</a> or Manage to get started!
+        </p>
+        </div>
+    </div>
+</section>
     
-    
-    
-        
+<section class="p-5" id="contact">
+     <div class="container">
+        <h2>About Us</h2>
+        <div class="contact">
+        <p>
+            Have questions or need assistance? Feel free to reach out to us.<br>
+            Email us at <a class="emailContact" href="#">inventorymanager@gmail.com</a> for business inquiries and other help.
+        </p>
+        </div>
+    </div>
+</section>
+
+<section class="p-5">
+        <div class="container">
+            <h2>FAQ</h2>
+            <div class="faq">
+                <h5>Q: What is InventoryManager?</h5>
+                <p>A: A 1 stop solution for managing your inventory for your business.</p>
+            </div>
+        </div>
+    </section>
+     
 </body>
 
 <footer>
