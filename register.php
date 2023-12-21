@@ -1,3 +1,30 @@
+<script>
+function confirmLogout() {
+    var confirmLogout = confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+        window.location.href = "logout.php";
+    }
+}
+function confirmDelete(itemId) {
+    var confirmDelete = confirm("Are you sure you want to delete this item?");
+    if (confirmDelete) {
+        // Redirect to delete item PHP script with the item ID
+        window.location.href = "delete_item.php?item_id=" + itemId;
+    }
+}
+function editItem(itemId) {
+    // Redirect to the edit item PHP script with the item ID
+    window.location.href = "edit_item.php?item_id=" + itemId;
+}
+function confirmResetInventory() {
+    var confirmReset = confirm("Are you sure you want to reset your inventory? This action requires reauthentication.");
+
+    if (confirmReset) {
+        // Redirect to the reset inventory PHP script
+        window.location.href = "reset_inventory.php";
+    }
+}
+</script>
 <?php
 include("sqlcon.php");
 
@@ -76,7 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
 </head>
 
 <body>
-    <section>
     <nav class="navbar sticky-top navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand text-white" href="index.php">InventoryManager</a>
@@ -86,28 +112,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Manage
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#" target="blank">Add</a></li>
-                      <li><a class="dropdown-item" href="#" target="blank">Edit</a></li>
-                      <li><a class="dropdown-item" href="#" target="blank">Delete</a></li>
-                    </ul>
-              </li>
-              
               <li class="nav-item">
-                <a class="nav-link text-white" href="#">Pricing</a>
+                <a class="nav-link text-white" href="inventory.php">Manage</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-white" href="#">About Us</a>
+                <a class="nav-link text-white" href="index.php#aboutus">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-white" href="#">Contact</a>
+                <a class="nav-link text-white" href="index.php#contact">Contact</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-white" href="#">FAQ</a>
+                <a class="nav-link text-white" href="index.php#inifaq">FAQ</a>
               </li>
             </ul>
             <div class="d-flex">
@@ -121,7 +136,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
                     '. $_SESSION['username'] . '
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Profile</a></li>
                       <li><a class="dropdown-item" href="logout.php">Log Out</a></li>
                     </ul>
                     </li>';
@@ -144,7 +158,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
           </div>
         </div>
     </nav>
-    </section>
 
     <div class="hero">
         <div class="login-container">

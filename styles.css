@@ -4,7 +4,6 @@
 
 
 .hero {
-    height: 675px;
     background-color: blue;
     text-align: start;
     background-image: url('images/werhos.jpg');
@@ -13,6 +12,30 @@
     position:relative;
     padding: 10%;
 }
+
+.heroInventory {
+    background-color: blue;
+    text-align: center;
+    background-image: url('images/werhos.jpg');
+    background-size: cover;
+    background-position: bottom;
+}
+
+.inventoryBox {
+    background-color: white;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.form-control {
+    border: 1px solid #555;
+}
+
 
 .herobtn{
     transform: translate(25%, 10%);
@@ -87,5 +110,17 @@
 
 .emailContact{
     color: rgb(124, 176, 211);
-    
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+.emailContact2{
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+.editBtn{
+    margin-right: 16px;
 }
