@@ -129,6 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     <div class="hero">
         <div class="login-container">
             <div class="login-box text-align-center">
+            <h2 class="mb-3"> Login </h2>
                 <form method="post" action="">
                     <div class="login-info">
                         <label for="username">Username:</label>

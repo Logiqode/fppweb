@@ -27,10 +27,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
             if (strlen($password) < 8) {
                 $registrationStatus = "Password should be 8 characters or longer.";
             } else {
+                $result = $conn->query("SELECT MAX(id) FROM users");
+                $row = $result->fetch_assoc();
+                $maxID = $row['MAX(id)'];
+
+                $newID = $maxID + 1;
+
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                $stmt = $conn->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
-                $stmt->bind_param("sss", $email, $username, $hashedPassword);
+                $stmt = $conn->prepare("INSERT INTO users (id, email, username, password) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("isss", $newID, $email, $username, $hashedPassword);
 
                 if ($stmt->execute()) {
                     $registrationStatus = "Registration successful!";
@@ -45,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $conn->close();
 }
 ?>
+
 
 
 
@@ -142,8 +149,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     <div class="hero">
         <div class="login-container">
             <div class="login-box text-align-center">
+                <h2 class="mb-3"> Create an account </h2>
                 <form method="post" action="">
-
                     <div class="login-info">
                         <label for="email">Email:</label>
                         <input type="email" name="email" required>
@@ -161,7 +168,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
 
                     <button type="submit" name="register">Register</button>
                     <?php
-                    if (isset($registrationStatus)) {
+                    if (isset($registrationStatus) && $registrationStatus === "Registration successful!") {
+                    echo "<p>$registrationStatus Please <a href='login.php'>log in</a> again.</p>";
+                    } else if (isset($registrationStatus)){
                         echo "<p>$registrationStatus</p>";
                     }
                     ?>
